@@ -120,6 +120,16 @@ class VisualOdometry:
 		self.new_frame = img
 		if(self.frame_stage == STAGE_DEFAULT_FRAME):
 			self.processFrame(frame_id)
+		elif(self.frame_stage == STAGE_SECOND_FRAME):
+			self.processSecondFrame()
+		elif(self.frame_stage == STAGE_FIRST_FRAME):
+			self.processFirstFrame()
+		self.last_frame = self.new_frame
+
+	def updateORB(self, img, frame_id):
+		assert(img.ndim==2 and img.shape[0]==self.cam.height and img.shape[1]==self.cam.width), "Frame: provided image has not the same size as the camera model or image is not grayscale"
+		self.new_frame = img
+		if(self.frame_stage == STAGE_DEFAULT_FRAME):
 			self.processFrameORB(frame_id)
 		elif(self.frame_stage == STAGE_SECOND_FRAME):
 			self.processSecondFrame()
